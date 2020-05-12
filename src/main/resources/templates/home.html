@@ -1,12 +1,15 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head>
-	<meta charset="UTF-8" />
-	<title>Home</title>
-</head>
+<head th:replace="fragments/head :: main-head"></head>
 <body>
+<nav th:replace="fragments/navbar :: main-nav"></nav>
 
-<h1>This is the home page</h1>
-
+<h1 id="test">This is the home page</h1>
+<script th:replace="fragments/scripts :: assets"></script>
+<script>
+    $("#test").click(function () {
+        $(this).css("color", "pink");
+    });
+</script>
 </body>
 </html>
