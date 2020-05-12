@@ -1,7 +1,9 @@
 package com.codeup.springblogapp;
 
+import net.minidev.json.JSONUtil;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 
@@ -13,6 +15,26 @@ public class HomeController {
     @ResponseBody
     public String landing() {
         return "This is the landing page!";
+    }
+    @GetMapping("/roll-dice")
+    public String dice() {
+        return "roll-dice";
+    }
+    //make variable for number and get random number and see if they match
+    @GetMapping("/roll-dice/{n}")
+    @ResponseBody
+    public String guess(@PathVariable int n) {
+        double randomDouble = Math.random();
+        randomDouble = randomDouble * 6 + 1;
+        int randomInt = (int) randomDouble;
+        System.out.println(randomInt);
+        if (n == randomInt) {
+            System.out.println("True");
+            return "your number: " + n + " random number: " + randomInt + " yayyy";
+        } else {
+            System.out.println("False");
+            return "your number: " + n + " random number: " + randomInt + " booooo";
+        }
     }
 
 }
