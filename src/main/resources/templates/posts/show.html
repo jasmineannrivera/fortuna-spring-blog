@@ -1,13 +1,15 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head>
-	<meta charset="UTF-8" />
-	<title>A Post</title>
-</head>
+<head th:replace="fragments/head :: main-head"></head>
+
 <body>
+<nav th:replace="fragments/navbar :: main-nav"></nav>
 
-<h1>Here's a post</h1>
-
-
+<div class="container">
+	<h1>This page will show 1 ad</h1>
+	<h1 th:text="${post.title}"></h1>
+	<h1 th:text="${post.body}"></h1>
+</div>
+<div th:replace="fragments/scripts :: assets"></div>
 </body>
 </html>
