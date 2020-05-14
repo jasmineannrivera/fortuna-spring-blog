@@ -12,6 +12,8 @@ public class Post {
     private String title;
     @Column(nullable = false)
     private String body;
+    @OneToOne
+    private User owner;
 
     public Post(){}
 
