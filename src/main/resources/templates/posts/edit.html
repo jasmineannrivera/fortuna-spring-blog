@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/head :: main-head"></head>
+<body>
+<nav th:replace="fragments/navbar :: main-nav"></nav>
+<div class="container-fluid">
+<h1>Edit Post</h1>
+<form th:action="@{${post.id}/edit}" th:method="POST">
+	<label for="title">Title</label>
+	<input id="title" type="text" name="title" th:value="${post.title}" placeholder="Enter title">
+	<br>
+	<label for="body">Body</label>
+	<textarea id="body" name="body" th:text="${post.body}" placeholder="Enter body"></textarea>
+	<br>
+	<button type="submit">Update Post</button>
+</form>
+</div>
+<div th:replace="fragments/scripts :: assets"></div>
+</body>
+</html>

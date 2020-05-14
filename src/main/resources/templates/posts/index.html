@@ -9,13 +9,16 @@
 	<h1>This page will show the posts</h1>
 
 	<div th:each="post : ${posts}">
-		<hr>
-		<p th:text="${post.title}" />
-		<p th:text="${post.body}" />
+		<a th:href="@{'/posts/' + ${post.id}}"><h1 class="titles" th:text="${post.title}"></h1></a>
+		<p th:text="${post.body}"></p>
 
+		<hr>
 	</div>
 </div>
 
 <div th:replace="fragments/scripts :: assets"></div>
+<script>
+
+</script>
 </body>
 </html>

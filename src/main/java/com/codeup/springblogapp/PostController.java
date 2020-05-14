@@ -12,29 +12,32 @@ import java.util.ArrayList;
 
 @Controller
 public class PostController {
+    private PostRepository postDao;
+
+    public PostController(PostRepository postDao) {
+        this.postDao = postDao;
+    }
     @GetMapping("/posts")
-    public String index(Model model){
-        ArrayList<Post> postList = new ArrayList<>();
-
-
-
-        for (int i = 1; i <= 5; i++) {
-            String fTitle = "Day " + i;
-            String fBody = "This is the body of a post for day " + i;
-            postList.add(new Post( fTitle, fBody));
-        }
-
-        model.addAttribute("posts", postList);
-
+    public String index(Model model) {
+        model.addAttribute("posts", postDao.findAll());
         return "posts/index";
     }
 
+
+
     @GetMapping("/posts/{id}")
     public String post(@PathVariable long id, Model model){
-        Post newPost = new Post("Example Post", "This is the body of a post!");
-        model.addAttribute("post", newPost);
+        model.addAttribute("post",postDao.getOne(id));
         return "posts/show";
     }
+
+    @GetMapping("/posts/{id}/edit")
+    public String editForm(@PathVariable long id, Model model) {
+        Post postToEdit = postDao.getOne(id);
+        model.addAttribute("post", postToEdit);
+        return "posts/edit";
+    }
+
 
 //    @GetMapping("/posts/create")
 //    @ResponseBody
