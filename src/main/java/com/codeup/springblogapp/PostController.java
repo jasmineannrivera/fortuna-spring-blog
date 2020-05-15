@@ -38,6 +38,15 @@ public class PostController {
         return "posts/edit";
     }
 
+    @PostMapping("/posts/{id}/edit")
+    public String edited(@PathVariable long id, @RequestParam String title, @RequestParam String body) {
+        Post p = postDao.getOne(id);
+        p.setTitle(title);
+        p.setBody(body);
+        postDao.save(p);
+        return "redirect:/posts";
+    }
+
 
     @GetMapping("/posts/create")
     @ResponseBody

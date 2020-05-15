@@ -8,13 +8,16 @@
 <div class="container">
 	<h2>Create Post</h2>
 
-	<form action="/posts/create" method="post">
-		<label for="title">Title: </label>
-		<input type="text" name="title" id="title" class="field"/>
-		<br><br>
-		<label for="body">Body:</label><br>
-		<textarea name="body" id="body" class="field" rows="4" cols="50"></textarea><br>
-		<button>Save</button>
+	<form action="#" th:action="@{/posts/create}" th:object="${post}" th:method="post">
+		<div class="form-group">
+			<label for="title">Title</label>
+			<input type="text" class="form-control" id="title" name="title" aria-describedby="title" th:field="*{title}">
+		</div>
+		<div class="form-group">
+			<label for="body">Body</label>
+			<textarea type="text" class="form-control" id="body" name="body" th:field="*{body}"></textarea>
+		</div>
+		<button class="btn btn-primary">Submit Post</button>
 	</form>
 </div>
 
