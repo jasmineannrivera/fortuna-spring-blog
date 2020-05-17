@@ -6,10 +6,14 @@
 <nav th:replace="fragments/navbar :: main-nav"></nav>
 
 <div class="container">
-	<h1>This page will show 1 ad</h1>
 	<h1 th:text="${post.title}"></h1>
-	<h1 th:text="${post.body}"></h1>
-	<a th:href="@{|${post.id}/edit|}">Edit</a>
+	<p th:text="${post.body}"></p>
+	<div class="row">
+		<a class="btn btn-success" th:href="@{/posts/{id}/edit(id=${post.id})}" role="button">Edit</a>
+		<form th:action="@{/posts/{id}/delete(id=${post.id})}" method="post">
+			<button class="btn btn-danger">Delete Post</button>
+		</form>
+	</div>
 </div>
 <div th:replace="fragments/scripts :: assets"></div>
 </body>
