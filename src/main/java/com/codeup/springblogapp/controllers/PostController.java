@@ -1,9 +1,9 @@
-package com.codeup.springblogapp;
+package com.codeup.springblogapp.controllers;
+import com.codeup.springblogapp.models.Post;
+import com.codeup.springblogapp.repositories.PostRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.ArrayList;
 
 
 @Controller
@@ -45,13 +45,17 @@ public class PostController {
 
 
     @GetMapping("/posts/create")
-    public String showCreateForm(Model model) {
+    public String showCreatePostForm(Model model){
+        System.out.println("posts/create method");
         model.addAttribute("post", new Post());
         return "posts/create";
     }
 
     @PostMapping("/posts/create")
-    public String createNewPost(){
-        return "redirect:/posts";
+    public String createNewPost(@ModelAttribute Post newPost) {
+        Post savedPost = postDao.save(newPost);
+        System.out.println(savedPost.getId());
+
+        return "redirect:/posts/" + savedPost.getId();
     }
 }
