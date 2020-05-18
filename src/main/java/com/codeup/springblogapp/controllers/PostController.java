@@ -1,4 +1,5 @@
 package com.codeup.springblogapp.controllers;
+import com.codeup.springblogapp.EmailService;
 import com.codeup.springblogapp.models.Post;
 import com.codeup.springblogapp.models.User;
 import com.codeup.springblogapp.repositories.PostRepository;
@@ -8,16 +9,21 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 
+
+
 @Controller
 public class PostController {
 
     //Dependency injection
     private PostRepository postDao;
     private UserRepository userDao;
+    private final EmailService emailService;
 
-    public PostController(PostRepository postDao, UserRepository userDao) {
+
+    public PostController(PostRepository postDao, UserRepository userDao, EmailService emailService) {
         this.postDao = postDao;
         this.userDao = userDao;
+        this.emailService = emailService;
     }
     //show all the posts
     @GetMapping("/posts")
@@ -54,7 +60,7 @@ public class PostController {
     //show the form for creating a new post
     @GetMapping("/posts/create")
     public String showCreatePostForm(Model model){
-        User user = userDao.getOne(1L);
+        User user = userDao.getOne(2L);
         System.out.println(user.getEmail());
         System.out.println("posts/create method");
         model.addAttribute("post", new Post());
@@ -63,10 +69,13 @@ public class PostController {
     //submit the form and redirect to main post page
     @PostMapping("/posts/create")
     public String createNewPost(@ModelAttribute Post newPost) {
-        User user = userDao.getOne(1L);
+        User user = userDao.getOne(2L);
         newPost.setUser(user);
         Post savedPost = postDao.save(newPost);
         System.out.println(savedPost.getId());
+        String subject = "blah";
+        String body = "blah blah";
+        emailService.prepareAndSend(newPost, subject, body);
 
         return "redirect:/posts/";
     }

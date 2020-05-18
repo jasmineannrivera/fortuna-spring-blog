@@ -11,8 +11,8 @@
 	<div th:each="post : ${posts}">
 		<a th:href="@{'/posts/' + ${post.id}}"><h1 class="titles" th:text="${post.title}"></h1></a>
 		<p th:text="${post.body}"></p>
-		<h1 th:text="${post.user.email}"></h1>
-<!--		<a th:href="'mailto:'+${post.user.email}"></a>-->
+<!--		<h1 th:text="${post.user.email}"></h1>-->
+		<p><a th:text="${post.user.email}" th:href="'mailto:'+${post.user.email}"></a></p>
 
 		<hr>
 	</div>
