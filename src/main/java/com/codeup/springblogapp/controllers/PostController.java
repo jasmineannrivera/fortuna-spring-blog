@@ -1,6 +1,8 @@
 package com.codeup.springblogapp.controllers;
 import com.codeup.springblogapp.models.Post;
+import com.codeup.springblogapp.models.User;
 import com.codeup.springblogapp.repositories.PostRepository;
+import com.codeup.springblogapp.repositories.UserRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -8,10 +10,14 @@ import org.springframework.web.bind.annotation.*;
 
 @Controller
 public class PostController {
-    private PostRepository postDao;
 
-    public PostController(PostRepository postDao) {
+    //Dependency injection
+    private PostRepository postDao;
+    private UserRepository userDao;
+
+    public PostController(PostRepository postDao, UserRepository userDao) {
         this.postDao = postDao;
+        this.userDao = userDao;
     }
     //show all the posts
     @GetMapping("/posts")
@@ -36,7 +42,9 @@ public class PostController {
     //submit the edits and redirect to main posts page
     @PostMapping("/posts/{id}/edit")
     public String edited(@PathVariable long id, @RequestParam String title, @RequestParam String body) {
+        User user = userDao.getOne(1L);
         Post p = postDao.getOne(id);
+        p.setUser(user);
         p.setTitle(title);
         p.setBody(body);
         postDao.save(p);
@@ -46,6 +54,8 @@ public class PostController {
     //show the form for creating a new post
     @GetMapping("/posts/create")
     public String showCreatePostForm(Model model){
+        User user = userDao.getOne(1L);
+        System.out.println(user.getEmail());
         System.out.println("posts/create method");
         model.addAttribute("post", new Post());
         return "posts/create";
@@ -53,6 +63,8 @@ public class PostController {
     //submit the form and redirect to main post page
     @PostMapping("/posts/create")
     public String createNewPost(@ModelAttribute Post newPost) {
+        User user = userDao.getOne(1L);
+        newPost.setUser(user);
         Post savedPost = postDao.save(newPost);
         System.out.println(savedPost.getId());
 

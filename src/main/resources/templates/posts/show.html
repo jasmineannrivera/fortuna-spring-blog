@@ -13,6 +13,7 @@
 		<form th:action="@{/posts/{id}/delete(id=${post.id})}" method="post">
 			<button class="btn btn-danger">Delete Post</button>
 		</form>
+		<a th:href="'mailto:'+${post.user.email}"><span th:text="${post.user.email}"></span> </a>
 	</div>
 </div>
 <div th:replace="fragments/scripts :: assets"></div>

@@ -21,15 +21,25 @@ public class Post {
     public Post(){}
 
 
-    public Post(String title, String body) {
-        this.title = title;
-        this.body = body;
+    public User getUser() {
+        return user;
     }
 
-    public Post(String title, String body, long id) {
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public Post(String title, String body, User user) {
+        this.title = title;
+        this.body = body;
+        this.user = user;
+    }
+
+    public Post(String title, String body, long id, User user) {
         this.title = title;
         this.body = body;
         this.id = id;
+        this.user = user;
     }
 
     public String getTitle() {
