@@ -4,6 +4,7 @@ import com.codeup.springblogapp.models.Post;
 import com.codeup.springblogapp.models.User;
 import com.codeup.springblogapp.repositories.PostRepository;
 import com.codeup.springblogapp.repositories.UserRepository;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -48,7 +49,7 @@ public class PostController {
     //submit the edits and redirect to main posts page
     @PostMapping("/posts/{id}/edit")
     public String edited(@PathVariable long id, @RequestParam String title, @RequestParam String body) {
-        User user = userDao.getOne(1L);
+        User user = userDao.getOne(id);
         Post p = postDao.getOne(id);
         p.setUser(user);
         p.setTitle(title);
@@ -69,8 +70,8 @@ public class PostController {
     //submit the form and redirect to main post page
     @PostMapping("/posts/create")
     public String createNewPost(@ModelAttribute Post newPost) {
-        User user = userDao.getOne(2L);
-        newPost.setUser(user);
+        User author = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        newPost.setUser(author);
         Post savedPost = postDao.save(newPost);
         System.out.println(savedPost.getId());
         String subject = "blah";
