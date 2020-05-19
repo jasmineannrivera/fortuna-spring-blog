@@ -4,8 +4,6 @@ import com.codeup.springblogapp.models.Post;
 import com.codeup.springblogapp.models.User;
 import com.codeup.springblogapp.repositories.PostRepository;
 import com.codeup.springblogapp.repositories.UserRepository;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -72,12 +70,6 @@ public class PostController {
     @PostMapping("/posts/create")
     public String createNewPost(@ModelAttribute Post newPost) {
         User user = userDao.getOne(2L);
-        Object obj = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        if (obj == null || !(obj instanceof UserDetails)) {
-            return "redirect:/login";
-        }
-        User user = (User) obj;
-        post.setUser(user);
         newPost.setUser(user);
         Post savedPost = postDao.save(newPost);
         System.out.println(savedPost.getId());
