@@ -1,5 +1,5 @@
 package com.codeup.springblogapp.controllers;
-import com.codeup.springblogapp.EmailService;
+import com.codeup.springblogapp.services.EmailService;
 import com.codeup.springblogapp.models.Post;
 import com.codeup.springblogapp.models.User;
 import com.codeup.springblogapp.repositories.PostRepository;
